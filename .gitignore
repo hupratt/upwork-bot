@@ -1,0 +1,7 @@
+.env
+env/
+*.log
+*.pkl
+*.html
+*.pyc
+url_RSS.txt
