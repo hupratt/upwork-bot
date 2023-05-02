@@ -17,8 +17,9 @@ options.add_argument("--incognito")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-extensions")
 options.add_argument("--disable-dev-shm-usage")
-HEADLESS = os.getenv("HEADLESS")
-if HEADLESS is True:
+HEADLESS = bool(os.getenv("HEADLESS"))
+if HEADLESS:
+    print("headless mode is on")
     options.add_argument('--headless')
 
 CHROMEDRIVER_PATH = os.getenv("CHROMEDRIVER_PATH")
