@@ -2,7 +2,7 @@ import unittest
 from main import UpworkBot
 
 class Test_Upwork_Bot(unittest.TestCase):     
-    def test_add(self):          
+    def test_pickle(self):          
         self.assertEqual(len(UpworkBot.parse_soup()), 10)
 
 if __name__ == '__main__':

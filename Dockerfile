@@ -34,4 +34,4 @@ COPY . /code
 
 WORKDIR /code
 
-CMD ["python", "src/main.py"]
+CMD ["python", "main.py"]
