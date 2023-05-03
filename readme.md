@@ -40,6 +40,7 @@ Docker
 `
 cp .env.template .env
 `
+
 `docker-compose up`
 
 In case you're allergic to docker here are the manual steps:
@@ -68,4 +69,4 @@ pip install -r requirements.txt
 
 ## Run manually on Linux
 
-python src/main.py
+`python src/main.py`
