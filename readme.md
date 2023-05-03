@@ -1,8 +1,14 @@
 # Upwork Bot
 
+Automate your job search and delegate the task to a bot that will apply for you.
+
+## Features
+- Configurable search parameters. You can include and exclude certain keywords as well as sort the results by either: "Most recent ads", "Most money spent" or "Client rating"
+- Run anywhere
+
 
 ## Run with docker-compose
-
+`docker-compose up`
 
 In case you're allergic to docker here are the manual steps:
 
