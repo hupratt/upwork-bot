@@ -28,6 +28,9 @@ cp .env.template .env
 In case you're allergic to docker here are the manual steps:
 
 ## Install manually on Linux
+
+Install chrome or chromium as well as the chrome driver.
+
 Run these commands: 
 
 `
