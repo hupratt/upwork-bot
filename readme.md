@@ -19,6 +19,7 @@ This codebase is in beta release. You may get banned for using this so make sure
 - [x] Docker
 - [ ] Comment my code
 - [ ] Replace time.sleep with async/await statements 
+- [ ] Add tests
 
 ## Requirements to run this
 
@@ -70,3 +71,7 @@ pip install -r requirements.txt
 ## Run manually on Linux
 
 `python src/main.py`
+
+## Run tests
+
+`python -m unittest -v`

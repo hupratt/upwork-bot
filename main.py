@@ -2,11 +2,6 @@ import pickle
 import time
 import os
 from datetime import datetime
-from journal import logger
-from chromewebdriver import test_driver
-from signin import login
-from search import go_to_search
-from add_questions import fill_out_text_boxes
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import urllib.request
@@ -16,6 +11,11 @@ from selenium.common.exceptions import (
     ElementNotInteractableException
 )
 from selenium.webdriver.common.by import By
+from src.journal import logger
+from src.signin import login
+from src.search import go_to_search
+from src.add_questions import fill_out_text_boxes
+from src.chromewebdriver import test_driver
 
 
 class UpworkBot:
@@ -53,9 +53,10 @@ class UpworkBot:
 
         with open("file.pkl", "wb") as file:
             # A new file will be created
+            # save progress in a pickle
             pickle.dump(soup, file)
 
-    # save progress in a pickle
+    @classmethod
     def parse_soup(self):
         logger.debug(f"Parse the html")
         # Open the file in binary mode
