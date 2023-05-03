@@ -111,6 +111,15 @@ class UpworkBot:
             logger.debug(f"Cant locate you_do_not_qualify_box inside of {link}")
             pass
         try:
+            milestone_radio_box = test_driver.find_element(
+            By.CSS_SELECTOR, "input[value='default']"
+            )
+            test_driver.execute_script("arguments[0].click();", milestone_radio_box)
+            time.sleep(1)
+        except NoSuchElementException:
+            logger.debug(f"Cant locate milestone_radio_box inside of {link}")
+            pass
+        try:
             duration_dropdown_box = test_driver.find_element(
                 By.XPATH, '//*[@id="dropdown-label-2"]'
             )
