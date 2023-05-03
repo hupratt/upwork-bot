@@ -78,12 +78,15 @@ class UpworkBot:
         test_driver.get(link.replace("?source=rss", ""))
         logger.debug(f"Visiting {link}")
         time.sleep(2)
-        apply_box = test_driver.find_element(
-            By.XPATH,
-            '//*[@id="main"]/div[2]/div[4]/div/div/div[1]/div/div[2]/aside/div[1]/div[1]/div[1]/div/span/button',
-        )
-        apply_box.click()
-        time.sleep(5)
+        try:
+            apply_box = test_driver.find_element(
+                By.XPATH,
+                '//*[@id="main"]/div[2]/div[4]/div/div/div[1]/div/div[2]/aside/div[1]/div[1]/div[1]/div/span/button',
+            )
+            apply_box.click()
+            time.sleep(5)
+        except NoSuchElementException:
+            pass
         try:
             annoying_box = test_driver.find_element(
                 By.XPATH,
@@ -115,7 +118,7 @@ class UpworkBot:
             By.CSS_SELECTOR, "input[value='default']"
             )
             test_driver.execute_script("arguments[0].click();", milestone_radio_box)
-            time.sleep(1)
+            time.sleep(8)
         except NoSuchElementException:
             logger.debug(f"Cant locate milestone_radio_box inside of {link}")
             pass

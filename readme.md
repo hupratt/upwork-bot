@@ -2,6 +2,10 @@
 
 Automate your job search and delegate the task to a bot that will apply for you.
 
+## DISCLAIMER
+
+This codebase is in beta release. You may get banned for using this. If you want to help out do not use this on your main account
+
 ## Features
 - Configurable search parameters. You can include and exclude certain keywords as well as sort the results by either: "Most recent ads", "Most money spent" or "Client rating"
 - Run anywhere
