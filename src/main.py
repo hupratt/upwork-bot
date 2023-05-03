@@ -37,7 +37,7 @@ class UpworkBot:
         REPORT_NAME = "Report.txt"
         logger.debug(f"Saving the report into {REPORT_NAME}")
         with open(REPORT_NAME, "a", encoding="UTF-8") as f:
-            f.write(f"{datetime.now()} Successfully applied to {self.successful_run} jobs. Failed to apply {self.failed_run} times and skipped {self.skipped_run} times")
+            f.write(f"\n{datetime.now()} Successfully applied to {self.successful_run} jobs. Failed to apply {self.failed_run} times and skipped {self.skipped_run} times\n")
 
     def pickle_search_results(self):
         logger.debug(f"Pickle the results")
@@ -210,7 +210,7 @@ class UpworkBot:
 
 if __name__ == "__main__":
     load_dotenv()
-    UpworkBot()
+    UpworkBot(dry_run=bool(int(os.getenv("DRY_RUN"))))
 
 # parse more urls
 # put configuration in yaml
