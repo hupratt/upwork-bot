@@ -13,6 +13,7 @@ import urllib.request
 from selenium.common.exceptions import (
     NoSuchElementException,
     ElementClickInterceptedException,
+    ElementNotInteractableException
 )
 from selenium.webdriver.common.by import By
 
@@ -37,7 +38,7 @@ class UpworkBot:
         REPORT_NAME = "Report.txt"
         logger.debug(f"Saving the report into {REPORT_NAME}")
         with open(REPORT_NAME, "a", encoding="UTF-8") as f:
-            f.write(f"\n{datetime.now()} Successfully applied to {self.successful_run} jobs. Failed to apply {self.failed_run} times and skipped {self.skipped_run} times\n")
+            f.write(f"{datetime.now()} Successfully applied to {self.successful_run} jobs. Failed to apply {self.failed_run} times and skipped {self.skipped_run} times\n")
 
     def pickle_search_results(self):
         logger.debug(f"Pickle the results")
@@ -79,6 +80,7 @@ class UpworkBot:
     def apply_to_job(self, link):
         # go to URL
         skipping = False
+        fail_cover_letter_box = False
         test_driver.get(link.replace("?source=rss", ""))
         logger.debug(f"Visiting {link}")
         time.sleep(2)
@@ -130,7 +132,9 @@ class UpworkBot:
             duration_dropdown_box = test_driver.find_element(
                 By.XPATH, '//*[@id="dropdown-label-2"]'
             )
-            duration_dropdown_box.click()
+            time.sleep(3)
+            if skipping is False:
+                duration_dropdown_box.click()
             time.sleep(1)
         except NoSuchElementException:
             logger.debug(f"Cant locate duration_dropdown_box inside of {link}")
@@ -139,7 +143,8 @@ class UpworkBot:
             duration_dropdown_item_box = test_driver.find_element(
                 By.XPATH, "(//span[@class='up-menu-item-text'])[4]"
             )
-            duration_dropdown_item_box.click()
+            if skipping is False:
+                duration_dropdown_item_box.click()
             time.sleep(1)
         except NoSuchElementException:
             logger.debug(
@@ -147,18 +152,39 @@ class UpworkBot:
             )
             pass
         try:
-            # github_box = test_driver.find_element(By.XPATH, "//label[contains(text(),'GitHub')]")
             time.sleep(3)
             cover_letter_box = test_driver.find_element(
                 By.CSS_SELECTOR, '[aria-labelledby="cover_letter_label"]'
             )
             COVER_LETTER = os.getenv("COVER_LETTER")
-            cover_letter_box.send_keys(COVER_LETTER)
+            if skipping is False:
+                cover_letter_box.send_keys(COVER_LETTER)
             time.sleep(1)
             logger.debug(f"Found the cover letter box {link}")
         except NoSuchElementException:
-            logger.warning(f"Cant locate cover_letter_box 3 inside of {link}")
+            logger.warning(f"Cant locate cover_letter_box inside of {link}")
             pass
+        except ElementNotInteractableException:
+            logger.debug(f"Trying to click with execute script")
+            fail_cover_letter_box = True
+            pass
+        if fail_cover_letter_box:
+            try:
+                time.sleep(3)
+                cover_letter_box = test_driver.find_element(
+                    By.CSS_SELECTOR, '[aria-labelledby="cover_letter_label"]'
+                )
+                COVER_LETTER = os.getenv("COVER_LETTER")
+                if skipping is False:
+                    test_driver.execute_script("arguments[0].send_keys(arguments[1]);", cover_letter_box, COVER_LETTER)
+                time.sleep(1)
+                logger.debug(f"Found the cover letter box {link}")
+            except NoSuchElementException:
+                logger.warning(f"Cant locate cover_letter_box inside of {link}")
+                pass
+            except ElementNotInteractableException:
+                logger.error(f"Cant locate cover_letter_box inside of {link}")
+                pass
         try:
             # q_and_a_interview_box = {"cause of this issue":"I would need to take a look at the code base"}
             questions_interview_box = test_driver.find_element(
@@ -182,8 +208,8 @@ class UpworkBot:
                 questions_interview_list[i]: text_fields_inside_questions_interview_box[i]
                 for i in range(len(questions_interview_list))
             }
-
-            fill_out_text_boxes(zipped_lists_dictionary, logger)
+            if skipping is False:
+                fill_out_text_boxes(zipped_lists_dictionary, logger)
 
             # attrs = test_driver.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', questions_interview_box)
             # result = [key for (key, value) in attrs.items() if value == '']

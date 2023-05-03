@@ -1,6 +1,11 @@
+<p align="center" width="100%">
+    <img width="90%" src="https://github.com/hupratt/upwork-bot/blob/master/upwork-bot.png">
+</p>
+
 # Upwork Bot
 
 Automate your job search and delegate the task to a bot that will apply for you.
+
 
 ## DISCLAIMER
 
@@ -26,7 +31,7 @@ Docker
 - Exclude keywords: EXCLUDE_KEYWORDS_IN_SEARCH=dart 3D
 - Run chrome in the background with the following configuration HEADLESS=1 or run in the foreground HEADLESS=0
 
-2. Run anywhere with docker
+2. Runs on Windows, Mac and Linux desktops
 3. Output a .txt with a couple of statistic like: timestamps, the number of applications sent, the number of failed applications and the number of skipped applications
 4. The program outputs an error log that gives insight as to why the job application failed. More often than not it's because the customer has very specific questions to which this program was not pre-configured to answer
 

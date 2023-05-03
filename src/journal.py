@@ -1,5 +1,3 @@
-# logging_example.py
-
 import logging
 
 class CustomFormatter(logging.Formatter):
