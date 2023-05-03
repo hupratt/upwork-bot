@@ -8,6 +8,9 @@ Automate your job search and delegate the task to a bot that will apply for you.
 
 
 ## Run with docker-compose
+`
+cp .env.template .env
+`
 `docker-compose up`
 
 In case you're allergic to docker here are the manual steps:

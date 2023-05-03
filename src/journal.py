@@ -26,7 +26,7 @@ class CustomFormatter(logging.Formatter):
 
 class CustomLogger:
     def __init__(self):
-        # usage
+        # USAGE
         # self.logger.debug('debug message')
         # self.logger.info('info message')
         # self.logger.warning('warn message')

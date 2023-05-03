@@ -18,8 +18,9 @@ from selenium.webdriver.common.by import By
 
 class UpworkBot:
     def __init__(self, dry_run=True):
-        self.SUCCESS_RUN = 0
-        self.FAIL_RUN = 0
+        self.successful_run = 0
+        self.failed_run = 0
+        self.skipped_run = 0
         self.dry_run = dry_run
         original_window = test_driver.current_window_handle
         login(test_driver, logger)
@@ -68,11 +69,12 @@ class UpworkBot:
         logger.debug(f"Applying for the jobs")
         for link in self.links:
             self.apply_to_job(link)
-            logger.debug(f"{self.SUCCESS_RUN} successfully applied and failed to apply {self.FAIL_RUN} times")
+            logger.debug(f"{self.successful_run} successfully applied and failed to apply {self.failed_run} times and skipped {self.skipped_run}")
             logger.debug(f"Going to the next link")
 
     def apply_to_job(self, link):
         # go to URL
+        skipping = False
         test_driver.get(link.replace("?source=rss", ""))
         logger.debug(f"Visiting {link}")
         time.sleep(2)
@@ -95,6 +97,18 @@ class UpworkBot:
         except ElementClickInterceptedException as e:
             logger.debug(f"Radio button not clickable {link}")
             logger.debug(f"{e}")
+            pass
+        try:
+            you_do_not_qualify_box = test_driver.find_element(
+                By.CSS_SELECTOR, "div[class='up-alert-slot-container'] p:nth-child(1)"
+            )
+            if you_do_not_qualify_box.text == "You do not meet all the client's preferred qualifications":
+                logger.debug(f"You do not qualify to this job, skipping {link}")
+                self.skipped_run += 1
+                skipping = not(skipping)
+            time.sleep(1)
+        except NoSuchElementException:
+            logger.debug(f"Cant locate you_do_not_qualify_box inside of {link}")
             pass
         try:
             duration_dropdown_box = test_driver.find_element(
@@ -166,15 +180,15 @@ class UpworkBot:
                 By.CSS_SELECTOR,
                 "button[class='up-btn up-btn-primary m-0']",
             )
-            if self.dry_run is False:
+            if self.dry_run is False and skipping is False:
                 submit_application_box.click()
                 time.sleep(5)
             logger.debug(f"Applied to job {link}")
-            self.SUCCESS_RUN += 1
+            self.successful_run += 1
         except NoSuchElementException as e:
             logger.error(f"Cant locate submit_application_box inside of {link}")
             logger.error(f"{e}")
-            self.FAIL_RUN += 1
+            self.failed_run += 1
             pass
 
 if __name__ == "__main__":
