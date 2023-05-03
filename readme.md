@@ -75,4 +75,5 @@ pip install -r requirements.txt
 ## Run tests
 
 `python -m unittest -v`
+
 `pytest --driver Chrome --driver-path /usr/lib/chromium-browser/chromedriver`

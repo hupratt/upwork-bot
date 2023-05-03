@@ -24,21 +24,16 @@ class UpworkBot:
         self.failed_run = 0
         self.skipped_run = 0
         self.dry_run = dry_run
-        original_window = test_driver.current_window_handle
-        login(test_driver, logger)
-        
-        go_to_search(test_driver, logger, original_window)
-        self.pickle_search_results()
-        self.links = self.parse_soup()
-
-        self.apply_to_jobs()
-        self.write_report()
 
     def write_report(self):
         REPORT_NAME = "Report.txt"
         logger.debug(f"Saving the report into {REPORT_NAME}")
         with open(REPORT_NAME, "a", encoding="UTF-8") as f:
-            f.write(f"{datetime.now()} Successfully applied to {self.successful_run} jobs. Failed to apply {self.failed_run} times and skipped {self.skipped_run} times\n")
+            f.write(f"""
+            {datetime.now()} Successfully applied to 
+            {self.successful_run} jobs. Failed to apply 
+            {self.failed_run} times and skipped 
+            {self.skipped_run} times\n""")
 
     def pickle_search_results(self):
         logger.debug(f"Pickle the results")
@@ -49,13 +44,17 @@ class UpworkBot:
             f.write(RSS_url)
 
         soup = BeautifulSoup(urllib.request.urlopen(RSS_url))
-        # Open a file and use dump()
-
+        # Save for later testing usage and non regression testing
+        with open("html_page.html", "w", encoding="UTF-8") as f:
+            f.write(html_page)
+            
+        # Save for later testing usage and non regression testing
+        # also useful when running selective parts of the program
         with open("file.pkl", "wb") as file:
             # A new file will be created
             # save progress in a pickle
             pickle.dump(soup, file)
-
+    # Decorator useful for later testing 
     @classmethod
     def parse_soup(self):
         logger.debug(f"Parse the html")
@@ -77,7 +76,7 @@ class UpworkBot:
             self.apply_to_job(link)
             logger.debug(f"{self.successful_run} successfully applied and failed to apply {self.failed_run} times and skipped {self.skipped_run}")
             logger.debug(f"Going to the next link")
-
+    
     def apply_to_job(self, link):
         # go to URL
         skipping = False
@@ -237,5 +236,11 @@ class UpworkBot:
 
 if __name__ == "__main__":
     load_dotenv()
-    UpworkBot(dry_run=bool(int(os.getenv("DRY_RUN"))))
-
+    bot = UpworkBot(dry_run=bool(int(os.getenv("DRY_RUN"))))
+    original_window = test_driver.current_window_handle
+    login(test_driver, logger)
+    go_to_search(test_driver, logger, original_window)
+    bot.pickle_search_results()
+    bot.links = bot.parse_soup()
+    bot.apply_to_jobs()
+    bot.write_report()
