@@ -44,7 +44,11 @@ def fill_out_text_boxes(zipped_lists_dictionary, logger):
             target.send_keys(
                 "I have built and maintained many react applications since 2015"
             )
+        elif re.search("What information do you need from me to complete the job", question, re.IGNORECASE):
+            target.send_keys(
+                "A quick call with your team would help a lot"
+            )
         else:
-            logger.debug(
+            logger.error(
                 f"No answers to the following question were found: {question}"
             )

@@ -7,9 +7,13 @@ Automate your job search and delegate the task to a bot that will apply for you.
 This codebase is in beta release. You may get banned for using this. If you want to help out do not use this on your main account
 
 ## Features
-- Configurable search parameters. You can include and exclude certain keywords as well as sort the results by either: "Most recent ads", "Most money spent" or "Client rating"
-- Run anywhere
+1. Configurable search parameters. You can include and exclude certain keywords as well as sort the results 
+- Sort: "Most recent ads", "Most money spent" or "Client rating". The variable that controls for sorting is either: SORT_SEARCH_BY=client_total_charge,SORT_SEARCH_BY=client_rating, SORT_SEARCH_BY=recency or SORT_SEARCH_BY=relevance
+- Include keywords: INCLUDE_KEYWORDS_IN_SEARCH=python django java C#
+- Exclude keywords: EXCLUDE_KEYWORDS_IN_SEARCH=dart 3D
 
+2. Run anywhere with docker
+3.
 
 ## Run with docker-compose
 `

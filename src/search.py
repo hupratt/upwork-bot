@@ -17,7 +17,12 @@ def go_to_search(test_driver, logger, original_window):
         logger.debug(f"Could not find the close_annoying_window_box")
 
     UPWORK_SEARCH_URL = os.getenv("UPWORK_SEARCH_URL")
-    test_driver.get(UPWORK_SEARCH_URL)
+    SORT_SEARCH_BY = os.getenv("SORT_SEARCH_BY")
+    INCLUDE_KEYWORDS_IN_SEARCH = os.getenv("INCLUDE_KEYWORDS_IN_SEARCH")
+    EXCLUDE_KEYWORDS_IN_SEARCH = os.getenv("EXCLUDE_KEYWORDS_IN_SEARCH")
+    GO_TO_URL = f"{UPWORK_SEARCH_URL}?sort={SORT_SEARCH_BY}&or_terms={INCLUDE_KEYWORDS_IN_SEARCH}&exclude_terms={EXCLUDE_KEYWORDS_IN_SEARCH}"
+    # test_driver.get(UPWORK_SEARCH_URL)
+    test_driver.get(GO_TO_URL)
     time.sleep(4)
     try:
         click_rss_icon_box = test_driver.find_element(
