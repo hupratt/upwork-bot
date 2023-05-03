@@ -1,6 +1,7 @@
 import pickle
 import time
 import os
+from datetime import datetime
 from journal import logger
 from chromewebdriver import test_driver
 from signin import login
@@ -30,7 +31,13 @@ class UpworkBot:
         self.links = self.parse_soup()
 
         self.apply_to_jobs()
+        self.write_report()
 
+    def write_report(self):
+        REPORT_NAME = "Report.txt"
+        logger.debug(f"Saving the report into {REPORT_NAME}")
+        with open(REPORT_NAME, "a", encoding="UTF-8") as f:
+            f.write(f"{datetime.now()} Successfully applied to {self.successful_run} jobs. Failed to apply {self.failed_run} times and skipped {self.skipped_run} times")
 
     def pickle_search_results(self):
         logger.debug(f"Pickle the results")
@@ -46,9 +53,6 @@ class UpworkBot:
         with open("file.pkl", "wb") as file:
             # A new file will be created
             pickle.dump(soup, file)
-
-        with open("html_page.html", "w", encoding="UTF-8") as f:
-            f.write(html_page)
 
     # save progress in a pickle
     def parse_soup(self):
