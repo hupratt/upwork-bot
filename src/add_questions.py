@@ -16,6 +16,18 @@ def fill_out_text_boxes(zipped_lists_dictionary, logger):
             target.send_keys(
                 "It depends on how far you are willing to sacrifice quality over speed?"
             )
+        elif re.search("How many hours", question, re.IGNORECASE):
+            target.send_keys(
+                "It depends on how far you are willing to sacrifice quality over speed?"
+            )
+        elif re.search("What software and applications do you use to scrape data", question, re.IGNORECASE):
+            target.send_keys(
+                "Only open source tools"
+            )
+        elif re.search("What software do you use to scrape data", question, re.IGNORECASE):
+            target.send_keys(
+                "Only open source tools"
+            )
         elif re.search("Describe your recent experience", question, re.IGNORECASE):
             target.send_keys(
                 "I've recently built a telegram group that gets updated from linkedin and monster databases based on specific job queries and filters. Users can then apply by clicking on the telegram link"
@@ -47,6 +59,18 @@ def fill_out_text_boxes(zipped_lists_dictionary, logger):
         elif re.search("What information do you need from me to complete the job", question, re.IGNORECASE):
             target.send_keys(
                 "A quick call with your team would help a lot"
+            )
+        elif re.search("Do you have examples of scraping sites", question, re.IGNORECASE):
+            target.send_keys(
+                "Please find my youtube channel here: https://www.youtube.com/channel/UC1bbDpT18-hqtiOJ-BKLuYQ"
+            )
+        elif re.search("examples of scraping sites", question, re.IGNORECASE):
+            target.send_keys(
+                "Please find my youtube channel here: https://www.youtube.com/channel/UC1bbDpT18-hqtiOJ-BKLuYQ"
+            )
+        elif re.search("What office applications", question, re.IGNORECASE):
+            target.send_keys(
+                "Excel and word exclusively. I am not proficient with VBA but I can do lookups, index/matches and much more"
             )
         else:
             logger.error(

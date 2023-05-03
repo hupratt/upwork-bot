@@ -148,6 +148,7 @@ class UpworkBot:
             pass
         try:
             # github_box = test_driver.find_element(By.XPATH, "//label[contains(text(),'GitHub')]")
+            time.sleep(3)
             cover_letter_box = test_driver.find_element(
                 By.CSS_SELECTOR, '[aria-labelledby="cover_letter_label"]'
             )
