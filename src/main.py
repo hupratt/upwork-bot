@@ -212,10 +212,3 @@ if __name__ == "__main__":
     load_dotenv()
     UpworkBot(dry_run=bool(int(os.getenv("DRY_RUN"))))
 
-# parse more urls
-# put configuration in yaml
-# list what i applied to into a new log file
-# docker
-# comment my code
-# close other window
-# replace time sleep with await

@@ -6,7 +6,16 @@ Automate your job search and delegate the task to a bot that will apply for you.
 
 This codebase is in beta release. You may get banned for using this so make sure to use it with a test account.
 
-## Requirements
+## Improvements
+
+- [ ] Parse more urls: job stops after 10 applications. Obstacle: need to find a way to close windows with selenium
+- [ ] Put configuration in yaml especially the Q&A data that is in src/add_questions.py
+- [x] List what i applied to into a new log file
+- [x] Docker
+- [ ] Comment my code
+- [ ] Replace time.sleep with async/await statements 
+
+## Requirements to run this
 
 Docker
 
