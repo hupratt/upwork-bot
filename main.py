@@ -24,6 +24,7 @@ class UpworkBot:
         self.failed_run = 0
         self.skipped_run = 0
         self.dry_run = dry_run
+        self.links = []
 
     def write_report(self):
         REPORT_NAME = "Report.txt"
@@ -74,7 +75,11 @@ class UpworkBot:
         logger.debug(f"Applying for the jobs")
         for link in self.links:
             self.apply_to_job(link)
-            logger.debug(f"{self.successful_run} successfully applied and failed to apply {self.failed_run} times and skipped {self.skipped_run}")
+            logger.debug(f"""
+            Successfully applied to 
+            {self.successful_run} jobs. Failed to apply 
+            {self.failed_run} times and skipped 
+            {self.skipped_run} times\n""")
             logger.debug(f"Going to the next link")
     
     def apply_to_job(self, link):

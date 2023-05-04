@@ -38,7 +38,7 @@ def selenium(selenium):
 # tests attempted to run against a sensitive 
 # environment will be skipped.
 @pytest.mark.nondestructive
-def test_lambdatest_todo_app(selenium):
+def visit_pickled_links(selenium):
     bot = UpworkBot()
     for link in UpworkBot.parse_soup():
         bot.apply_to_job(link)
